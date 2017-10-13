@@ -1,4 +1,4 @@
-def validate_title(text):
+'''def validate_title(text):
 
     error = 0
 
@@ -13,12 +13,12 @@ def validate_body(body):
 
     if body == '':
         error = "This blog is empty!"
-    return error
+    return error'''
 
 
-'''def is_blank(text):
+def blank_post(text):
     
     if not text:
         return True
     
-    return False'''
+    return False

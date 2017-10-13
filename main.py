@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from validators import validate_title, validate_body
+from validators import blank_post
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -19,9 +19,21 @@ class Post(db.Model):
         self.body = body
 
 
+@app.route('/', methods=['POST', 'GET'])
+def index():
+
+    return render_template('blog.html',title='Build a Blog')
+
+
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
 
+    if request.method == 'POST':
+        post_id = int(request.form['post-id'])
+        post = Post.query.get(post_id)
+        db.session.add(post)
+        db.session.commit()
+    
     posts = Post.query.all()
 
     return render_template('blog.html', title='Build a Blog', posts=posts) 
@@ -34,20 +46,22 @@ def newpost():
         title = request.form['title']
         body = request.form['body']
 
-        new_post = Post(title, body)
-        db.session.add(new_post)
-        db.session.commit()
-        return redirect('/blog')
+        if blank_post(title) or blank_post(body) == True:
+            flash("Post is missing title and body")
+            #return render_template('newpost.html', title=title
+                                                # , body=body)
+            #return "<h1>ERROR</h1>"
+        else:
+            new_post = Post(title, body)
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect('/blog')
 
     return render_template('newpost.html') 
 
 
-@app.route('/', methods=['POST', 'GET'])
-def index():
-    return render_template('blog.html',title='Build a Blog')
 
-
-@app.route("/", methods=["POST"])
+'''@app.route("/", methods=["POST"])
 def validate_post():
 
     username = request.form["username"]
@@ -60,7 +74,7 @@ def validate_post():
         return render_template('newpost.html', post=post)
     else:
         return render_template('blog.html', title=title, body=body) 
-
+'''
 
 if __name__ == '__main__':
     app.run()
