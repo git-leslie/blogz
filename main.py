@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, flash
+from validators import validate_title, validate_body
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -43,10 +44,22 @@ def newpost():
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-
-
-
     return render_template('blog.html',title='Build a Blog')
+
+
+@app.route("/", methods=["POST"])
+def validate_post():
+
+    username = request.form["username"]
+    password = request.form["password"]
+
+    title_error = validators.validate_title(title)
+    body_error = validators.validate_body(body)
+
+    if not title_error and not body_error: 
+        return render_template('newpost.html', post=post)
+    else:
+        return render_template('blog.html', title=title, body=body) 
 
 
 if __name__ == '__main__':
