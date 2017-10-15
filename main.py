@@ -60,6 +60,13 @@ def newpost():
     return render_template('newpost.html') 
 
 
+@app.route('/post', methods=['GET'])
+def post():
+    title = request.args.get('title')
+    body = request.args.get('body')
+    
+    return render_template('post.html') 
+
 
 '''@app.route("/", methods=["POST"])
 def validate_post():

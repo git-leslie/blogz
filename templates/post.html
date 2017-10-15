@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{title}}</h1>
 
-    <p>{{body}}</p>
-    
+    <!--
+    {% for post in posts %} 
+        <h1>{{title}}</h1>
+
+        <p>{{body}}</p>
+    {% endfor %}
+    -->
+
+
+    <form action='/post'>
+        <label for="title"><h1>{{title}}</h1></label>
+        <label for="body"><p>{{body}}</p></label>
+    </form>
+
+
+
+
+
+
+
 {% endblock %}
