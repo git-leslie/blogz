@@ -2,24 +2,19 @@
 
 {% block content %}
 
-    <!--
-    {% for post in posts %} 
-        <h1>{{title}}</h1>
+    <h1>Build a Blog</h1>
 
-        <p>{{body}}</p>
-    {% endfor %}
-    -->
+    {% if posts|length == 0 %}
 
+        <p>No such post</p>
+    
+    {% else %}
 
-    <form action='/post'>
-        <label for="title"><h1>{{title}}</h1></label>
-        <label for="body"><p>{{body}}</p></label>
-    </form>
+        {% for post in posts %}
+            <hr />
+                <h3>{{post.title}}</h3>
+                <p>{{post.body}}</p>
+        {% endfor %}
 
-
-
-
-
-
-
+    {% endif %}
 {% endblock %}

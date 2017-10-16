@@ -6,6 +6,12 @@ h1 {
     color: green;
 }
 
+.flash {
+    color: red;
+    font-style: italic;
+}
+
+
 /*
 div {
     margin: 15px 0px;
@@ -17,8 +23,3 @@ div {
     font-style: italic;
 }
 */
-
-#flashes {
-    color: red;
-    font-style: italic;
-}

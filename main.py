@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from validators import blank_post
+from validators import validate_title, validate_body
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -22,7 +22,8 @@ class Post(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
-    return render_template('blog.html',title='Build a Blog')
+    return redirect("/blog")
+    #return render_template('blog.html',title='Build a Blog')
 
 
 @app.route('/blog', methods=['POST', 'GET'])
@@ -46,11 +47,16 @@ def newpost():
         title = request.form['title']
         body = request.form['body']
 
-        if blank_post(title) or blank_post(body) == True:
-            flash("Post is missing title and body")
-            #return render_template('newpost.html', title=title
-                                                # , body=body)
-            #return "<h1>ERROR</h1>"
+        title_error = validate_title(title)
+        body_error = validate_body(body)       
+
+        if title_error or body_error:
+            if title_error:
+                flash(title_error)
+            if body_error:
+                flash(body_error)
+            return render_template('newpost.html', title=title
+                                                 , body=body)        
         else:
             new_post = Post(title, body)
             db.session.add(new_post)
@@ -62,26 +68,15 @@ def newpost():
 
 @app.route('/post', methods=['GET'])
 def post():
-    title = request.args.get('title')
-    body = request.args.get('body')
-    
-    return render_template('post.html') 
+    post_id = request.args.get('id')
 
+    posts = []
 
-'''@app.route("/", methods=["POST"])
-def validate_post():
+    if post_id:
+        posts = Post.query.filter_by(id=int(post_id)).all()
 
-    username = request.form["username"]
-    password = request.form["password"]
+    return render_template('post.html', title='Build a Blog', posts=posts) 
 
-    title_error = validators.validate_title(title)
-    body_error = validators.validate_body(body)
-
-    if not title_error and not body_error: 
-        return render_template('newpost.html', post=post)
-    else:
-        return render_template('blog.html', title=title, body=body) 
-'''
 
 if __name__ == '__main__':
     app.run()
