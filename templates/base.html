@@ -1,7 +1,12 @@
 <!doctype html>
 <html>
     <head>
-        <!-- <style>.flashes {color: red;}</style> -->
+        <style>
+            .flash {
+                color: red;
+                font-style: italic;
+            }
+        </style>
         <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
         <title>{{title}}</title>
     </head>
@@ -9,20 +14,6 @@
     <div>
         <a href='/blog'>Main Blog Page</a> <a href='/newpost'>Add a Blog Entry</a>
     </div> 
-<!--
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flashes">
-            {% for message in messages %}
-                <div>{{ message }}</div>
-            {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-
-        -->
-
-
 
     {% block content %}
     {% endblock %}

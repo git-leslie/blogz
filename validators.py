@@ -3,7 +3,7 @@ def validate_title(text):
     error = 0
 
     if not text:
-        error = 'You forgot a title'
+        error = 'Add a freaking title'
     return error
 
 
@@ -12,13 +12,5 @@ def validate_body(body):
     error = 0
 
     if not body:
-        error = "This blog is empty!"
+        error = "Omg geeze did you forget the body??"
     return error
-
-'''
-def blank_post(text):
-    
-    if not text:
-        return True
-    
-    return False'''
