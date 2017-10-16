@@ -44,10 +44,10 @@ def blog():
 def newpost():
 
     if request.method == 'POST':
-        title = request.form['title']
+        posttitle = request.form['posttitle']
         body = request.form['body']
 
-        title_error = validate_title(title)
+        title_error = validate_title(posttitle)
         body_error = validate_body(body)       
 
         if title_error or body_error:
@@ -55,13 +55,14 @@ def newpost():
                 flash(title_error)
             if body_error:
                 flash(body_error)
-            return render_template('newpost.html', title=title
+            return render_template('newpost.html', title="New Post!"
+                                                 , posttitle=posttitle
                                                  , body=body)        
         else:
-            new_post = Post(title, body)
+            new_post = Post(posttitle, body)
             db.session.add(new_post)
             db.session.commit()
-            return redirect('/blog')
+            return redirect('/post')
 
     return render_template('newpost.html') 
 
@@ -75,8 +76,23 @@ def post():
     if post_id:
         posts = Post.query.filter_by(id=int(post_id)).all()
 
-    return render_template('post.html', title='Build a Blog', posts=posts) 
+    return render_template('post.html', title='Posty Post', posts=posts) 
+
+
+'''@app.route('/case2', methods=['GET'])
+def case2():
+    post_id = request.args.get('id')
+
+    posts = []
+
+    if post_id:
+        posts = Post.query.filter_by(id=int(post_id)).all()
+
+    return render_template('case2.html', title="HERE'S YOUR POST", posts=posts) '''
 
 
 if __name__ == '__main__':
     app.run()
+
+
+    db.session.commit()
