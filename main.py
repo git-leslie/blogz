@@ -67,7 +67,6 @@ def newpost():
             post_ids = db.session.query(Post.id).order_by(Post.id).all()
             post_id = post_ids[len(post_ids)-1][0]
             return redirect('/post?id=' + str(post_id))
-        #/post?id=1
 
     return render_template('newpost.html') 
 
