@@ -62,7 +62,12 @@ def newpost():
             new_post = Post(posttitle, body)
             db.session.add(new_post)
             db.session.commit()
-            return redirect('/post')
+            #return redirect('/post')
+
+            post_ids = db.session.query(Post.id).order_by(Post.id).all()
+            post_id = post_ids[len(post_ids)-1][0]
+            return redirect('/post?id=' + str(post_id))
+        #/post?id=1
 
     return render_template('newpost.html') 
 
@@ -77,18 +82,6 @@ def post():
         posts = Post.query.filter_by(id=int(post_id)).all()
 
     return render_template('post.html', title='Posty Post', posts=posts) 
-
-
-'''@app.route('/case2', methods=['GET'])
-def case2():
-    post_id = request.args.get('id')
-
-    posts = []
-
-    if post_id:
-        posts = Post.query.filter_by(id=int(post_id)).all()
-
-    return render_template('case2.html', title="HERE'S YOUR POST", posts=posts) '''
 
 
 if __name__ == '__main__':
