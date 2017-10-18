@@ -1,7 +1,7 @@
 def validate_title(text):
     error = 0
     if not text:
-        error = 'Add a freaking title'
+        error = 'Add a freaking title!'
     return error
 
 

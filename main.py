@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from validators import validate_title, validate_body, validate_verify_pw
+from validators import validate_title, validate_body, validate_verify_pw, validate_gen
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -77,7 +77,7 @@ def signup():
         else:
             flash("Don't be a copycat, try a different username")
 
-    return render_template('register.html')
+    return render_template('signup.html')
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -104,6 +104,8 @@ def blog():
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
 
+    owner = User.query.filter_by(username=session["username"]).first()
+
     if request.method == 'POST':
         post_title = request.form['post_title']
         post_body = request.form['post_body']
@@ -117,13 +119,12 @@ def newpost():
             if body_error:
                 flash(body_error)
             return render_template('newpost.html', title="New Post!"
-                                                 , posttitle=posttitle
-                                                 , body=body)        
+                                                 , post_title=post_title
+                                                 , post_body=post_body)        
         else:
-            new_post = Post(post_title, post_body)
+            new_post = Post(post_title, post_body, owner)
             db.session.add(new_post)
             db.session.commit()
-            #return redirect('/post')
 
             post_ids = db.session.query(Post.id).order_by(Post.id).all()
             post_id = post_ids[len(post_ids)-1][0]
