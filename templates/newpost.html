@@ -4,17 +4,6 @@
     <h1>Add a Blog Entry</h1>
     <form method='post' action='/newpost'>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="flash">
-                {% for message in messages %}
-                    <div>{{ message }}</div>
-                {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-
         <label>
             Title for your new blog:
             <input type="text" name='post_title' {% if post_title %} value="{{ post_title }}" {% endif %}/>

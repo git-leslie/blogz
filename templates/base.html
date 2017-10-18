@@ -13,12 +13,26 @@
         <title>{{ post_title }}</title>
     </head>
 <body>
+
     <div>
-        <a href='/blog'>Main Blog Page</a> <a href='/newpost'>Add a Blog Entry</a>
+        <a href='/'>Home</a> <a href='/blog'>All Posts</a> <a href='/newpost'>New Post</a> <a href='/login'>Log In</a> <a href='/logout'>Log Out</a>
     </div> 
+
 
     {% block content %}
     {% endblock %}
+
+    </br>   
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
 </body>
 </html>

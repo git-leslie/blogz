@@ -48,6 +48,12 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/blog')
+
+
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
