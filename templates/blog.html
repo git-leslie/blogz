@@ -12,8 +12,8 @@
 
         {% for post in posts %}
             <hr />
-                <h3><a href='/post?id={{post.id}}'>{{post.title}}</a></h3>
-                <p>{{post.body}}</p>
+                <h3><a href='/post?id={{post.id}}'>{{post.post_title}}</a></h3>
+                <p>{{post.post_body}}</p>
         {% endfor %}
 
     {% endif %}

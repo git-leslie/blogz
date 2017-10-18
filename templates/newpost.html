@@ -17,12 +17,12 @@
 
         <label>
             Title for your new blog:
-            <input type="text" name='posttitle' {% if posttitle %} value="{{ posttitle }}" {% endif %}/>
+            <input type="text" name='post_title' {% if post_title %} value="{{ post_title }}" {% endif %}/>
         </label>
         </br>
         <label>
             Your new blog:
-            <textarea name='body'>{% if body %} {{ body }} {% endif %}</textarea>
+            <textarea name='post_body'>{% if post_body %} {{ post_body }} {% endif %}</textarea>
         </label>
         <input type="submit" value='Add Entry' />
     </form>
