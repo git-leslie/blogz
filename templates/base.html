@@ -14,7 +14,7 @@
     </head>
 <body>
 
-    <div>
+    <div class="navigation">
         <a href='/'>Home</a> <a href='/blog'>All Posts</a> <a href='/newpost'>New Post</a> <a href='/login'>Log In</a> <a href='/logout'>Log Out</a>
     </div> 
 
@@ -23,7 +23,7 @@
     {% endblock %}
 
     </br>   
-    
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="flash">

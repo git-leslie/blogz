@@ -34,8 +34,9 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup', 'post', 'index']
+    allowed_routes = ['login', 'signup', 'post', 'index', 'blog']
     if request.endpoint not in allowed_routes and 'username' not in session:
+        flash("Must be logged in")
         return redirect('/login')
 
 
@@ -96,22 +97,32 @@ def signup():
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
-    return redirect("/blog")
-    #return render_template('blog.html',title='Build a Blog')
+    users = User.query.all()
+
+    return render_template("index.html", users=users)
 
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
-
-    if request.method == 'POST':
-        post_id = int(request.form['post-id'])
-        post = Post.query.get(post_id)
-        db.session.add(post)
-        db.session.commit()
     
-    posts = Post.query.all()
+    #posts = Post.query.all()
+    #return render_template('blog.html', title="build a blog", posts=posts) 
 
-    return render_template('blog.html', title='Build a Blog', posts=posts) 
+    post_id = request.args.get("postid")
+    user_id = request.args.get("userid")
+
+    posts = []
+    title = "Blog!"
+
+    # if query string, find single post; else, display all non-removed posts
+    if post_id:
+        posts = Post.query.filter_by(id=int(post_id)).all()
+    elif user_id:
+        posts = Post.query.filter_by(owner_id=int(user_id)).all()
+    else:
+        posts = Post.query.order_by(Post.id.desc()).all()
+
+    return render_template('blog.html', title=title, posts=posts)
 
 
 @app.route('/newpost', methods=['POST', 'GET'])

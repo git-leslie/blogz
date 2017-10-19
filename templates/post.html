@@ -14,7 +14,10 @@
             <hr />
                 <h3>{{ post.post_title }}</h3>
                 <p>{{ post.post_body }}</p>
+
+                <p>written by <a href="/blog?userid={{ post.owner_id }}">{{ post.owner.username }}</a></p>
         {% endfor %}
+
 
     {% endif %}
 {% endblock %}

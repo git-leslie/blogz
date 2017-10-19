@@ -10,3 +10,7 @@ h1 {
     color: red;
     font-style: italic;
 }
+
+.navigation {
+    margin-left: 100px
+}
